@@ -7,3 +7,6 @@
 [submodule "renesas-u-boot-cip"]
 	path = renesas-u-boot-cip
 	url = git@git.g77k.com:supercatexpert/rzg2-uboot.git
+[submodule "linux-cip"]
+	path = linux-cip
+	url = git@git.g77k.com:supercatexpert/linux-cip.git
