@@ -3,7 +3,10 @@
 import serial
 import sys
 
-sport = sys.argv[1]
+sport = ""
+if len(sys.argv) > 1:
+    sport = sys.argv[1]
+
 flasherfile = "rzg2-flash-writer/AArch64_output/AArch64_Flash_writer_SCIF_DUMMY_CERT_E6300400_ek874.mot"
 
 flasherwaittext = b"-- Load Program to SystemRAM ---------------\r\nplease send !"
@@ -14,7 +17,9 @@ writeareatext = b"Select area"
 writesectortext = b"Please Input Start Address in sector"
 writeaddresstext = b"Please Input Program Start Address"
 sendrequesttext = b"please send"
-speeduptext = b"Please change to 921.6Kbps baud rate setting of the terminal."
+speeduptext1 = b"Change to 460.8Kbps baud rate setting of the SCIF."
+speeduptext2 = b"Please change to 921.6Kbps baud rate setting of the terminal."
+speeduptext3 = b"Please change to 460.8Kbps baud rate setting of the terminal."
 
 bootloadermap = [
     {"part": "1", "sector": "0", "address": "E6320000", "file": "arm-trusted-firmware/deploy/g2e-emmc/bootparam_sa0.srec"},
@@ -68,16 +73,25 @@ while True:
     if flasherreadytext in rdata:
         break
 
-print("Flash burner ready, set serial port to 921.6kbps for speeding up.")
+print("Flash burner ready, try to speed up.")
+
+sspeed = 115200
 
 sp.write(b'SUP\r\n')
 while True:
     rdata = sp.read(8192)
-    if speeduptext in rdata:
+    if speeduptext2 in rdata:
+        sspeed = 921600
+        break
+    elif speeduptext1 in rdata:
+        sspeed = 460800
+        break
+    elif speeduptext3 in rdata:
+        sspeed = 460800
         break
 
 sp.close()
-sp = serial.Serial(sport, 921600, timeout=0.5)
+sp = serial.Serial(sport, sspeed, timeout=0.5)
 
 sp.write(b'\r\n')
 while True:
@@ -85,7 +99,7 @@ while True:
     if flasherreadytext in rdata:
         break
 
-print("Speed up OK, setting eMMC mode...")
+print("Speed up to %d bps OK, setting eMMC mode..." % sspeed)
 
 sp.write(b'EM_SECSD\r\n')
 while True:
