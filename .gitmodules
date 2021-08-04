@@ -1,12 +1,12 @@
 [submodule "rzg2-flash-writer"]
 	path = rzg2-flash-writer
-	url = git@git.g77k.com:supercatexpert/rzg2-flash-writer.git
+	url = https://github.com/ariaboard-com/renesas_rzg2e_flash_writer.git
 [submodule "arm-trusted-firmware"]
 	path = arm-trusted-firmware
-	url = git@git.g77k.com:supercatexpert/rzg2-arm-trusted-firmware.git
+	url = https://github.com/ariaboard-com/renesas_rzg2e_arm_trusted_firmware.git
 [submodule "renesas-u-boot-cip"]
 	path = renesas-u-boot-cip
-	url = git@git.g77k.com:supercatexpert/rzg2-uboot.git
+	url = https://github.com/ariaboard-com/renesas_rzg2e_uboot.git
 [submodule "linux-cip"]
 	path = linux-cip
-	url = git@git.g77k.com:supercatexpert/linux-cip.git
+	url = https://github.com/ariaboard-com/renesas_rzg2e_kernel.git
